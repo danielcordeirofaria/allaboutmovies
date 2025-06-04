@@ -1,0 +1,227 @@
+/* --- Header Styles --- */
+#header {
+  background-color: var(--color-highlight);
+  padding: 0 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  position: relative;
+}
+
+.logo-link {
+  display: inline-block;
+  border-radius: 50%;
+  z-index: 10;
+}
+
+#appLogo {
+  height: 40px;
+  width: auto;
+  display: block;
+  background-color: var(--color-accent);
+  border-radius: 50%;
+}
+
+/* --- Hamburger Button --- */
+.hamburger-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 30px;
+  height: 25px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1010;
+  margin-left: auto;
+  order: 2;
+}
+
+.hamburger-button__bar {
+  width: 100%;
+  height: 3px;
+  background-color: var(--color-text-main);
+  border-radius: 2px;
+  transition: all 0.3s ease-in-out;
+}
+
+.hamburger-button.active .hamburger-button__bar:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+.hamburger-button.active .hamburger-button__bar:nth-child(2) {
+  opacity: 0;
+}
+.hamburger-button.active .hamburger-button__bar:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* --- Navbar --- */
+.navbar {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: var(--color-highlight);
+  padding: 10px 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1005;
+}
+
+.navbar.active {
+  display: flex;
+}
+
+.navbar .nav-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.navbar .nav-links li {
+  margin: 0;
+  width: 100%;
+}
+
+.navbar .nav-links a {
+  text-decoration: none;
+  color: var(--color-text-main);
+  font-weight: 500;
+  font-size: 1.1em;
+  padding: 12px 20px;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  display: block;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.navbar .nav-links li:last-child a {
+  border-bottom: none;
+}
+
+.navbar .nav-links a:hover,
+.navbar .nav-links a.active {
+  color: var(--color-accent);
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* --- Search Container --- */
+.search-container {
+  display: none;
+  align-items: center;
+  order: 3;
+}
+
+.search-container input[type="text"] {
+  padding: 8px 12px;
+  border: 1px solid var(--color-accent);
+  border-radius: 4px 0 0 4px;
+  background-color: var(--color-background);
+  color: var(--color-text-main);
+  outline: none;
+  flex-grow: 1;
+}
+
+.search-container input[type="text"]::placeholder {
+  color: var(--color-text-secondary);
+}
+
+.search-container button {
+  padding: 8px 15px;
+  background-color: var(--color-accent);
+  color: var(--color-background);
+  border: 1px solid var(--color-accent);
+  border-left: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.search-container button:hover {
+  background-color: #00b0b3;
+}
+
+@media (min-width: 768px) {
+  #header {
+    padding: 0 20px;
+  }
+
+  #appLogo {
+    height: 50px;
+  }
+
+  .hamburger-button {
+    display: none;
+  }
+
+  .navbar {
+    display: flex !important;
+    position: static;
+    flex-direction: row;
+    width: auto;
+    background-color: transparent;
+    box-shadow: none;
+    padding: 0;
+    margin-left: 20px;
+    order: 1;
+  }
+
+  .navbar .nav-links {
+    flex-direction: row;
+  }
+
+  .navbar .nav-links li {
+    margin-left: 20px;
+    width: auto;
+    border-bottom: none;
+  }
+  .navbar .nav-links li:first-child {
+    margin-left: 0;
+  }
+  .navbar .nav-links a {
+    padding: 5px 0;
+    font-size: 1em;
+    text-align: left;
+    border-bottom: none;
+  }
+  .navbar .nav-links a:hover,
+  .navbar .nav-links a.active {
+    background-color: transparent;
+  }
+
+  .search-container {
+    display: flex;
+    width: auto;
+    max-width: 300px;
+    margin-left: auto;
+    order: 2;
+  }
+}
+
+@media (min-width: 1024px) {
+  .navbar .nav-links li {
+    margin-left: 25px;
+  }
+  .search-container {
+    max-width: 350px;
+    margin: 0;
+  }
+}
