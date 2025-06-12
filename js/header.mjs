@@ -21,8 +21,8 @@ export function loadHeader() {
       <nav class="navbar" id="navbarMenu">
         <ul class="nav-links">
           <li><a href="index.html" class="active">Home</a></li>
-          <li><a href="#">Top Rated</a></li>
-          <li><a href="#">Genres</a></li>
+          <li><a href="search.html">Search</a></li>
+          <li><a href="watchlist.html">My list</a></li>
           <li><a href="randomMovie.html">Random Movie</a></li>
         </ul>
       </nav>
