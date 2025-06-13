@@ -44,6 +44,25 @@ main {
     display: block;
 }
 
+.watchlist-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 2em;
+    cursor: pointer;
+}
+
+.watchlist-btn.add {
+    color: #ccc;
+}
+
+.watchlist-btn.remove,
+.watchlist-btn.add.active {
+    color: red;
+}
+
 @media (min-width: 768px) {
     main {
         padding: 20px;

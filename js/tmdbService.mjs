@@ -1,3 +1,5 @@
+import { isInWatchlist } from './storageUtils.js';
+
 const API_CONFIG = {
   KEY: 'a6a31210ff3a5959d29008875d98fb94',
   BASE_URL: 'https://api.themoviedb.org/3',
@@ -198,6 +200,13 @@ export function renderMovieDetails(movie, genresMap, soundtrackData = null) {
         ? movie.genre_ids.map(id => genresMap[id] || 'Unknown').join(', ')
         : 'Not available');
 
+  const isBookmarked = isInWatchlist(movie.id);
+  const watchlistBtnHtml = `
+    <button class="watchlist-btn add ${isBookmarked ? 'active' : ''}"
+            data-movie-id="${movie.id}"
+            title="${isBookmarked ? 'Remove from Watchlist' : 'Add to Watchlist'}">❤</button>
+  `;
+
   let watchProvidersHtml = '';
   const countryCode = 'US';
   const watchData = movie['watch/providers'] || movie.watch_providers;
@@ -225,7 +234,7 @@ export function renderMovieDetails(movie, genresMap, soundtrackData = null) {
   let spotifyHtml = '';
   if (soundtrackData) {
     spotifyHtml = `<div class="soundtrack-info" style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee;"><h4>Soundtrack on Spotify</h4>`;
-    if (soundtrackData.image) spotifyHtml += `<img src="${soundtrackData.image}" alt="Cover for ${soundtrackData.name}" class="soundtrack-cover" style="max-width: 100px; height: auto; border-radius: 4px; margin-bottom: 10px; display: block;">`;
+    if (soundtrackData.cover) spotifyHtml += `<img src="${soundtrackData.cover}" alt="Cover for ${soundtrackData.name}" class="soundtrack-cover" style="max-width: 100px; height: auto; border-radius: 4px; margin-bottom: 10px; display: block;">`;
     spotifyHtml += `<p><strong>Album:</strong> ${soundtrackData.name || 'N/A'}</p>`;
     if (soundtrackData.artist) spotifyHtml += `<p><strong>Artist:</strong> ${soundtrackData.artist}</p>`;
     spotifyHtml += `<a href="${soundtrackData.url}" target="_blank" class="spotify-link" style="display: inline-block; background-color: #1DB954; color: white; padding: 8px 15px; border-radius: 20px; text-decoration: none; font-weight: 500;">Listen on Spotify</a></div>`;
@@ -239,7 +248,10 @@ export function renderMovieDetails(movie, genresMap, soundtrackData = null) {
         <img src="${posterPath}" alt="Poster for ${movie.title}" class="movie-poster-detail">
       </div>
       <div class="movie-info-column">
-        <h3 class="movie-title-detail">${movie.title} ${releaseYear ? `(${releaseYear})` : ''}</h3>
+        <div class="movie-title-wrapper">
+          <h3 class="movie-title-detail">${movie.title} ${releaseYear ? `(${releaseYear})` : ''}</h3>
+          ${watchlistBtnHtml}
+        </div>
         <div class="movie-meta-detail">
           <span><strong>Release Date:</strong> ${releaseDateFormatted}</span>
           <span><strong>Runtime:</strong> ${runtime}</span>

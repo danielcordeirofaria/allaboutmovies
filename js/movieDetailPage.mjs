@@ -5,9 +5,11 @@ import {
 } from './tmdbService.mjs';
 
 import { findMovieSoundtrackOnSpotify } from './spotifyService.mjs';
+import { addToWatchlist, removeFromWatchlist, isInWatchlist } from './storageUtils.js';
 
 const movieDetailsContainer = document.getElementById('movieDetailsContainer');
 let currentGenresMap = {};
+let currentMovie = null;
 
 async function loadAndDisplayMovieDetails(movieId) {
   if (!movieDetailsContainer) return;
@@ -19,6 +21,8 @@ async function loadAndDisplayMovieDetails(movieId) {
     }
 
     const movieDetails = await fetchMovieDetailsById(movieId);
+    currentMovie = movieDetails;
+
     if (movieDetails) {
       console.log("TMDB Movie Details:", movieDetails);
       const movieTitle = movieDetails.title;
@@ -52,4 +56,23 @@ async function initializePage() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', initializePage);
+document.addEventListener('DOMContentLoaded', () => {
+    initializePage();
+
+    movieDetailsContainer.addEventListener('click', (event) => {
+        const button = event.target.closest('.watchlist-btn.add');
+        if (!button || !currentMovie) return;
+
+        const movieId = currentMovie.id;
+
+        if (isInWatchlist(movieId)) {
+            removeFromWatchlist(movieId);
+            button.classList.remove('active');
+            button.title = "Add to Watchlist";
+        } else {
+            addToWatchlist(currentMovie);
+            button.classList.add('active');
+            button.title = "Remove from Watchlist";
+        }
+    });
+});

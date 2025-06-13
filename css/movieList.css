@@ -1,0 +1,63 @@
+    .movies-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+    }
+
+    .movie-card {
+        position: relative;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .movie-card-link {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .movie-card-poster {
+        width: 100%;
+        height: auto;
+    }
+
+    .movie-card-info {
+        padding: 10px;
+    }
+
+    .movie-card-title {
+        font-size: 1.2em;
+        margin: 0 0 5px;
+    }
+
+    .movie-card-year,
+    .movie-card-genres,
+    .movie-card-rating {
+        margin: 5px 0;
+        font-size: 0.9em;
+    }
+
+    .watchlist-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        font-size: 1.2em;
+        cursor: pointer;
+    }
+
+    .watchlist-btn.add {
+        color: #ccc;
+    }
+
+    .watchlist-btn.remove,
+    .watchlist-btn.add.active {
+        color: red;
+    }
+
+    .no-results {
+        text-align: center;
+        font-size: 1.2em;
+        color: #666;
+    }

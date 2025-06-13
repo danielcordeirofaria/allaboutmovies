@@ -4,6 +4,11 @@ import {
   searchMoviesByQuery,
   discoverMoviesByFilters,
 } from "./tmdbService.mjs";
+import {
+  addToWatchlist,
+  removeFromWatchlist,
+  isInWatchlist,
+} from "./storageUtils.js";
 
 const searchForm = document.getElementById("searchForm");
 const queryInput = document.getElementById("query");
@@ -15,6 +20,7 @@ const paginationContainer = document.getElementById("pagination");
 let genresMap = {};
 let currentPage = 1;
 let currentFilters = {};
+let currentSearchData = null;
 
 async function populateGenreFilter() {
   genresMap = await fetchAndCacheMovieGenres();
@@ -30,6 +36,7 @@ async function populateGenreFilter() {
 }
 
 function displaySearchResults(data) {
+  currentSearchData = data;
   searchResultsContainer.innerHTML = "";
 
   if (!data || !data.results || !Array.isArray(data.results)) {
@@ -70,6 +77,8 @@ function displaySearchResults(data) {
         : movie.genres && Array.isArray(movie.genres) && movie.genres.length > 0
         ? movie.genres.map((g) => g.name).join(", ")
         : "Not available";
+        
+    const isBookmarked = isInWatchlist(movie.id);
 
     const movieCard = document.createElement("div");
     movieCard.className = "movie-card";
@@ -89,6 +98,9 @@ function displaySearchResults(data) {
           }</p>
         </div>
       </a>
+      <button class="watchlist-btn add ${isBookmarked ? 'active' : ''}" 
+              data-movie-id="${movie.id}" 
+              title="${isBookmarked ? 'Remove from Watchlist' : 'Add to Watchlist'}">❤</button>
     `;
     resultsGrid.appendChild(movieCard);
   });
@@ -227,4 +239,26 @@ function handleHeaderSearch() {
 document.addEventListener("DOMContentLoaded", async () => {
   await populateGenreFilter();
   handleHeaderSearch();
+
+  searchResultsContainer.addEventListener("click", (event) => {
+    const button = event.target.closest(".watchlist-btn.add");
+    if (!button) return;
+
+    const movieId = parseInt(button.dataset.movieId, 10);
+    if (isNaN(movieId) || !currentSearchData || !currentSearchData.results)
+      return;
+
+    const movie = currentSearchData.results.find((m) => m.id === movieId);
+    if (!movie) return;
+
+    if (isInWatchlist(movieId)) {
+      removeFromWatchlist(movieId);
+      button.classList.remove("active");
+      button.title = "Add to Watchlist";
+    } else {
+      addToWatchlist(movie);
+      button.classList.add("active");
+      button.title = "Remove from Watchlist";
+    }
+  });
 });
