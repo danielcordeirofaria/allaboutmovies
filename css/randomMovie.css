@@ -53,11 +53,25 @@ main {
   flex-grow: 1;
 }
 
+.movie-title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
 .movie-title-detail {
   color: var(--color-accent);
   font-size: 2em;
-  margin-top: 0;
-  margin-bottom: 15px;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.movie-info-column .watchlist-btn {
+  position: static;
+  font-size: 1.8em;
+  padding: 0 5px;
+  line-height: 1;
 }
 
 .movie-meta-detail {

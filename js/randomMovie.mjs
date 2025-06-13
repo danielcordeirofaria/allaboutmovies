@@ -2,18 +2,20 @@ import {
   fetchAndCacheMovieGenres,
   fetchMovieDetailsById,
   discoverRandomMovie,
-  IMAGE_BASE_URL,
   renderMovieDetails
 } from './tmdbService.mjs';
 
 import { findMovieSoundtrackOnSpotify } from './spotifyService.mjs';
+import { addToWatchlist, removeFromWatchlist, isInWatchlist } from './storageUtils.js';
 
 const movieDetailsContainer = document.getElementById('movieDetailsContainer');
 const getAnotherMovieBtn = document.getElementById('getAnotherMovieBtn');
 
 let currentGenresMap = {};
+let currentMovie = null;
 
 async function loadAndDisplayRandomMovie() {
+  currentMovie = null;
   if (!movieDetailsContainer) return;
   movieDetailsContainer.innerHTML = `<div class="loading-placeholder"><p>Finding an awesome movie for you...</p></div>`;
   if (getAnotherMovieBtn) getAnotherMovieBtn.disabled = true;
@@ -27,6 +29,8 @@ async function loadAndDisplayRandomMovie() {
     if (randomMovieBase && randomMovieBase.id) {
       console.log("TMDB Random Movie (Base):", randomMovieBase);
       const movieDetails = await fetchMovieDetailsById(randomMovieBase.id);
+      currentMovie = movieDetails;
+
       if (movieDetails) {
         console.log("TMDB Movie Details (Full):", movieDetails);
         const movieTitle = movieDetails.title;
@@ -53,10 +57,6 @@ async function loadAndDisplayRandomMovie() {
   }
 }
 
-if (getAnotherMovieBtn) {
-  getAnotherMovieBtn.addEventListener('click', loadAndDisplayRandomMovie);
-}
-
 async function initializePage() {
   try {
     if (Object.keys(currentGenresMap).length === 0) {
@@ -71,4 +71,27 @@ async function initializePage() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', initializePage);
+document.addEventListener('DOMContentLoaded', () => {
+    initializePage();
+
+    if (getAnotherMovieBtn) {
+        getAnotherMovieBtn.addEventListener('click', loadAndDisplayRandomMovie);
+    }
+
+    movieDetailsContainer.addEventListener('click', (event) => {
+        const button = event.target.closest('.watchlist-btn.add');
+        if (!button || !currentMovie) return;
+
+        const movieId = currentMovie.id;
+
+        if (isInWatchlist(movieId)) {
+            removeFromWatchlist(movieId);
+            button.classList.remove('active');
+            button.title = "Add to Watchlist";
+        } else {
+            addToWatchlist(currentMovie);
+            button.classList.add('active');
+            button.title = "Remove from Watchlist";
+        }
+    });
+});
