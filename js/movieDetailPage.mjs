@@ -13,7 +13,11 @@ let currentMovie = null;
 
 async function loadAndDisplayMovieDetails(movieId) {
   if (!movieDetailsContainer) return;
-  movieDetailsContainer.innerHTML = `<div class="loading-placeholder"><p>Loading movie details...</p></div>`;
+  movieDetailsContainer.innerHTML = `
+    <div class="loading-placeholder">
+      <div class="loader"></div>
+      <p>Loading movie details...</p>
+    </div>`;
 
   try {
     if (Object.keys(currentGenresMap).length === 0) {
