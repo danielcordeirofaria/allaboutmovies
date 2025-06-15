@@ -1,66 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Search Movies - All About Movies</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./css/reset.css" />
     <link rel="stylesheet" href="./css/header.css" />
     <link rel="stylesheet" href="./css/footer.css" />
     <link rel="stylesheet" href="./css/style.css" />
     <link rel="stylesheet" href="./css/searchPage.css" />
-</head>
-<body>
+  </head>
+  <body>
     <header id="header"></header>
 
     <main>
-        <section class="search-section">
-            <h1 class="section-title">Search Movies</h1>
-            <form id="searchForm" class="search-filters">
-                <div class="filter-group">
-                    <label for="query">Movie Title:</label>
-                    <input type="text" id="query" name="query" placeholder="e.g., Inception">
-                </div>
-                <div class="filter-group">
-                    <label for="genre">Genre:</label>
-                    <select id="genre" name="genre">
-                        <option value="">All Genres</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="year">Year:</label>
-                    <input type="number" id="year" name="year" placeholder="e.g., 2010" min="1900" max="2099">
-                </div>
-                <!-- Poderia adicionar mais filtros como:
-                <div class="filter-group">
-                    <label for="sortBy">Sort By:</label>
-                    <select id="sortBy" name="sortBy">
-                        <option value="popularity.desc">Popularity (Desc)</option>
-                        <option value="popularity.asc">Popularity (Asc)</option>
-                        <option value="release_date.desc">Release Date (Newest)</option>
-                        <option value="release_date.asc">Release Date (Oldest)</option>
-                        <option value="vote_average.desc">Rating (Desc)</option>
-                        <option value="vote_average.asc">Rating (Asc)</option>
-                    </select>
-                </div>
-                 -->
-                <button type="submit" class="cta-button">Search</button>
-            </form>
+      <section class="search-section">
+        <h1 class="section-title">Search Movies</h1>
+        <form id="searchForm" class="search-filters">
+          <div class="filter-group">
+            <label for="query">Movie Title:</label>
+            <input
+              type="text"
+              id="query"
+              name="query"
+              placeholder="e.g., Inception"
+            />
+          </div>
+          <div class="filter-group">
+            <label for="genre">Genre:</label>
+            <select id="genre" name="genre">
+              <option value="">All Genres</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="year">Year:</label>
+            <input
+              type="number"
+              id="year"
+              name="year"
+              placeholder="e.g., 2010"
+              min="1900"
+              max="2099"
+            />
+          </div>
+          <button type="submit" class="cta-button">Search</button>
+        </form>
 
-            <div id="searchResults" class="search-results-container">
-                 <p class="search-placeholder">Use the filters above to search for movies.</p>
-            </div>
-            <div id="pagination" class="pagination-controls">
-            </div>
-        </section>
+        <div id="searchResults" class="search-results-container">
+          <p class="search-placeholder">
+            Use the filters above to search for movies.
+          </p>
+        </div>
+        <div id="pagination" class="pagination-controls"></div>
+      </section>
     </main>
 
     <footer id="footer"></footer>
 
     <script type="module" src="./js/main.mjs"></script>
     <script type="module" src="./js/searchPage.mjs"></script>
-</body>
+  </body>
 </html>
