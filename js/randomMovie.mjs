@@ -17,7 +17,11 @@ let currentMovie = null;
 async function loadAndDisplayRandomMovie() {
   currentMovie = null;
   if (!movieDetailsContainer) return;
-  movieDetailsContainer.innerHTML = `<div class="loading-placeholder"><p>Finding an awesome movie for you...</p></div>`;
+  movieDetailsContainer.innerHTML = `
+    <div class="loading-placeholder">
+      <div class="loader"></div>
+      <p>Finding an awesome movie for you...</p>
+    </div>`;
   if (getAnotherMovieBtn) getAnotherMovieBtn.disabled = true;
 
   try {
